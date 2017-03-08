@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="“Hexo,NexT,Tensoflow,python,js”" />
+  <meta name="keywords" content="Tensorflow," />
 
 
 
@@ -105,15 +105,24 @@
 
 
 
-<meta name="description" content="善悟其心，勿困于形。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Silence’s Blog">
-<meta property="og:url" content="https://silencezjl.github.io/archives/page/3/index.html">
+<meta name="description" content="CPU版TensorFlowCPU版的TensorFlow都很简单，参见上次的教程
+GPU版TensorFlow####1.下载GPU依赖库PS:首先你要有Nvida的显卡哦！
+需要用到的链接安装顺序由上到下：# Anaconda安装，选择py3.5版本(目前2.7不行)https://www.continuum.io/downloads# cuda安装(这个下载很慢)https://develo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows部署TensorFlow">
+<meta property="og:url" content="https://silencezjl.github.io/2017/03/08/Windows部署TensorFlow/index.html">
 <meta property="og:site_name" content="Silence’s Blog">
-<meta property="og:description" content="善悟其心，勿困于形。">
+<meta property="og:description" content="CPU版TensorFlowCPU版的TensorFlow都很简单，参见上次的教程
+GPU版TensorFlow####1.下载GPU依赖库PS:首先你要有Nvida的显卡哦！
+需要用到的链接安装顺序由上到下：# Anaconda安装，选择py3.5版本(目前2.7不行)https://www.continuum.io/downloads# cuda安装(这个下载很慢)https://develo">
+<meta property="og:image" content="https://silencezjl.github.io/images/win_tf.png">
+<meta property="og:updated_time" content="2017-03-08T11:54:46.950Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Silence’s Blog">
-<meta name="twitter:description" content="善悟其心，勿困于形。">
+<meta name="twitter:title" content="Windows部署TensorFlow">
+<meta name="twitter:description" content="CPU版TensorFlowCPU版的TensorFlow都很简单，参见上次的教程
+GPU版TensorFlow####1.下载GPU依赖库PS:首先你要有Nvida的显卡哦！
+需要用到的链接安装顺序由上到下：# Anaconda安装，选择py3.5版本(目前2.7不行)https://www.continuum.io/downloads# cuda安装(这个下载很慢)https://develo">
+<meta name="twitter:image" content="https://silencezjl.github.io/images/win_tf.png">
 
 
 
@@ -145,7 +154,7 @@
 
 
 
-  <title> 归档 | Silence’s Blog </title>
+  <title> Windows部署TensorFlow | Silence’s Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +179,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,149 +305,219 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 11 篇日志。 继续努力。
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://silencezjl.github.io/2017/03/08/Windows部署TensorFlow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Silence Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://imgsrc.baidu.com/forum/w%3D580/sign=5f355304820a19d8cb03840d03fb82c9/d4818c1001e93901b2b5878b79ec54e737d196ac.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Silence’s Blog">
     </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Windows部署TensorFlow
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-08T19:25:10+08:00">
+                2017-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/08/Windows部署TensorFlow/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/08/Windows部署TensorFlow/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/08/Windows部署TensorFlow/" class="leancloud_visitors" data-flag-title="Windows部署TensorFlow">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                  
+                    <span class="post-meta-item-text">字数统计</span>
+                  
+                    <span title="字数统计" }}">
+                      262
+                    </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
 
       
       
-      
 
+      
+        <h3 id="CPU版TensorFlow"><a href="#CPU版TensorFlow" class="headerlink" title="CPU版TensorFlow"></a>CPU版TensorFlow</h3><p>CPU版的TensorFlow都很简单，参见<a href="https://silencezjl.coding.me/2016/11/14/Tensorflow%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" target="_blank" rel="external">上次的教程</a></p>
+<h3 id="GPU版TensorFlow"><a href="#GPU版TensorFlow" class="headerlink" title="GPU版TensorFlow"></a>GPU版TensorFlow</h3><p>####1.下载GPU依赖库<br>PS:首先你要有Nvida的显卡哦！</p>
+<p>需要用到的链接<br>安装顺序由上到下：<br># Anaconda安装，选择py3.5版本(目前2.7不行)<br><a href="https://www.continuum.io/downloads" target="_blank" rel="external">https://www.continuum.io/downloads</a><br># cuda安装(这个下载很慢)<br><a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br># cudnn下载就好，不用安装，但要配置环境变量<br><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="external">https://developer.nvidia.com/cudnn</a></p>
+<p>安装Anaconda前可以把你原来的Python卸载了，Anaconda自带Python。</p>
+<p>前两个Anaconda和cuda都是exe安装包，一路点下一步就能安装。</p>
+<p>最后一个cudnn需要像我这样配置一下环境变量：<br>此电脑=&gt;高级系统设置=&gt;高级=&gt;环境变量=&gt;系统变量<br>找到path那个变量<br>向其中添加cudnn的路径。</p>
+<p><img src="/images/win_tf.png" alt="win_tf"></p>
+<p>在此，TF依赖库安装完成！</p>
+<p>####2.下载安装TF<br>直接调出CMD<br>然后输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install --ignore-installed --upgrade tensorflow-gpu</div></pre></td></tr></table></figure></p>
+<p>稍等几分钟就能用啦！</p>
+<p>####3.测试TF<br>CMD进入Python<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import tensorflow as tf</div></pre></td></tr></table></figure></p>
+<p>如果正常运行就好啦！</p>
+
+      
+    </div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
         </div>
       
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2016/02/12/Python3网络爬虫心得/" itemprop="url">
-              
-                <span itemprop="name">Python3网络爬虫心得</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-02-12T11:22:28+08:00"
-              content="2016-02-12" >
-          02-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
 
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/02/基于HEXO搭建个人博客/" rel="next" title="基于HEXO搭建个人博客">
+                <i class="fa fa-chevron-left"></i> 基于HEXO搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
         </div>
       
-      
 
       
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/11/01/以学生视角看笔记本电脑/" itemprop="url">
-              
-                <span itemprop="name">以学生视角看笔记本电脑</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-11-01T15:05:17+08:00"
-              content="2015-11-01" >
-          11-01
-        </time>
-      </div>
-
-    </header>
+      
+    </footer>
   </article>
 
 
 
-    
-
+    <div class="post-spread">
       
+        <div class="ds-share flat" data-thread-key="2017/03/08/Windows部署TensorFlow/"
+     data-title="Windows部署TensorFlow"
+     data-content=""
+     data-url="https://silencezjl.github.io/2017/03/08/Windows部署TensorFlow/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
       
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2015/10/25/给电商老师的作业/" itemprop="url">
-              
-                <span itemprop="name">给电商老师的作业</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2015-10-25T11:43:40+08:00"
-              content="2015-10-25" >
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
-
-
+    </div>
+  </div>
 
           
           </div>
@@ -446,6 +525,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/08/Windows部署TensorFlow/"
+           data-title="Windows部署TensorFlow" data-url="https://silencezjl.github.io/2017/03/08/Windows部署TensorFlow/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -465,8 +552,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://imgsrc.baidu.com/forum/w%3D580/sign=5f355304820a19d8cb03840d03fb82c9/d4818c1001e93901b2b5878b79ec54e737d196ac.jpg"
@@ -537,6 +633,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU版TensorFlow"><span class="nav-number">1.</span> <span class="nav-text">CPU版TensorFlow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPU版TensorFlow"><span class="nav-number">2.</span> <span class="nav-text">GPU版TensorFlow</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -647,11 +759,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
 
 
   
