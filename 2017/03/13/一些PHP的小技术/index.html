@@ -1,0 +1,1072 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="PHP," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言以我做过的一个小项目为例，开源一些核心小技巧，当然我不会开源全部代码，毕竟这可以算一个商业项目，而且我也只知道后台的技术^-^（PS：解释我大部分写在注释里。）
+PHP后台发smtp邮件就是用于做邮箱验证的，部分代码是我自己写的，在网上找了很久，找到一个令我满意的class(点我查看原网址)，就直接调用了里面的功能，然后自己根据情形改了一些参数。这个email.class.php有点多，我会直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些PHP的小技术">
+<meta property="og:url" content="https://silencezjl.github.io/2017/03/13/一些PHP的小技术/index.html">
+<meta property="og:site_name" content="Silence’s Blog">
+<meta property="og:description" content="前言以我做过的一个小项目为例，开源一些核心小技巧，当然我不会开源全部代码，毕竟这可以算一个商业项目，而且我也只知道后台的技术^-^（PS：解释我大部分写在注释里。）
+PHP后台发smtp邮件就是用于做邮箱验证的，部分代码是我自己写的，在网上找了很久，找到一个令我满意的class(点我查看原网址)，就直接调用了里面的功能，然后自己根据情形改了一些参数。这个email.class.php有点多，我会直">
+<meta property="og:updated_time" content="2017-03-13T16:14:28.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一些PHP的小技术">
+<meta name="twitter:description" content="前言以我做过的一个小项目为例，开源一些核心小技巧，当然我不会开源全部代码，毕竟这可以算一个商业项目，而且我也只知道后台的技术^-^（PS：解释我大部分写在注释里。）
+PHP后台发smtp邮件就是用于做邮箱验证的，部分代码是我自己写的，在网上找了很久，找到一个令我满意的class(点我查看原网址)，就直接调用了里面的功能，然后自己根据情形改了一些参数。这个email.class.php有点多，我会直">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '6392440680345503000',
+      author: '博主大大'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title> 一些PHP的小技术 | Silence’s Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Silence’s Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">张家麟的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://silencezjl.github.io/2017/03/13/一些PHP的小技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Silence Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://imgsrc.baidu.com/forum/w%3D580/sign=5f355304820a19d8cb03840d03fb82c9/d4818c1001e93901b2b5878b79ec54e737d196ac.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Silence’s Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一些PHP的小技术
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-13T23:32:53+08:00">
+                2017-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/13/一些PHP的小技术/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/13/一些PHP的小技术/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/13/一些PHP的小技术/" class="leancloud_visitors" data-flag-title="一些PHP的小技术">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                  
+                    <span class="post-meta-item-text">字数统计</span>
+                  
+                    <span title="字数统计" }}">
+                      1,667
+                    </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>以我做过的一个小项目为例，开源一些核心小技巧，当然我不会开源全部代码，毕竟这可以算一个商业项目，而且我也只知道后台的技术^-^<br>（PS：解释我大部分写在注释里。）</p>
+<h4 id="PHP后台发smtp邮件"><a href="#PHP后台发smtp邮件" class="headerlink" title="PHP后台发smtp邮件"></a>PHP后台发smtp邮件</h4><p>就是用于做邮箱验证的，部分代码是我自己写的，在网上找了很久，找到一个令我满意的class(<a href="http://www.daixiaorui.com/read/16.html#viewpl" target="_blank" rel="external">点我查看原网址</a>)，就直接调用了里面的功能，然后自己根据情形改了一些参数。这个email.class.php有点多，我会直接上传到github，然后讲一下其他代码的功能。<br>首先是index.html，是做一个显示提示内容的，相信大家都懂！<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">index.html</div><div class="line"></div><div class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</div><div class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=gb2312&quot; /&gt;</div><div class="line">&lt;title&gt;PHP利用smtp类发送邮件范例&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;form action=&quot;sendmail.php&quot; method=&quot;post&quot;&gt;</div><div class="line">	&lt;p&gt;收件人：&lt;input type=&quot;text&quot; name=&quot;toemail&quot; /&gt;&lt;/p&gt;</div><div class="line">	&lt;p&gt;标&amp;nbsp;&amp;nbsp;题：&lt;input type=&quot;text&quot; name=&quot;title&quot; /&gt;&lt;/p&gt;</div><div class="line">	&lt;p&gt;内&amp;nbsp;&amp;nbsp;容：&lt;textarea name=&quot;content&quot; cols=&quot;50&quot; rows=&quot;5&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;</div><div class="line">	&lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;发送&quot;  /&gt;&lt;/p&gt;</div><div class="line">&lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>然后是发邮件的配置文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">sendmail.php</div><div class="line"></div><div class="line">&lt;?php</div><div class="line">/**</div><div class="line"> * 注：本邮件类都是经过我测试成功了的，如果大家发送邮件的时候遇到了失败的问题，请从以下几点排查：</div><div class="line"> * 1. 用户名和密码是否正确；</div><div class="line"> * 2. 检查邮箱设置是否启用了smtp服务；</div><div class="line"> * 3. 是否是php环境的问题导致；</div><div class="line"> * 4. 将22行的$smtp-&gt;debug = false改为true，可以显示错误信息，然后可以复制报错信息到网上搜一下错误的原因；</div><div class="line"> */</div><div class="line">require_once &quot;email.class.php&quot;;</div><div class="line">//******************** 配置信息 ********************************</div><div class="line">$smtpserver = &quot;smtp.163.com&quot;;//SMTP服务器</div><div class="line">$smtpserverport =25;//SMTP服务器端口</div><div class="line">$smtpusermail = &quot;m15310977608_1@163.com&quot;;//SMTP服务器的用户邮箱</div><div class="line">$smtpemailto = $_POST[&apos;toemail&apos;];//发送给谁</div><div class="line">$smtpuser = &quot;m15310977608_1@163.com&quot;;//SMTP服务器的用户帐号</div><div class="line">$smtppass = &quot;wmx19970403ZJL&quot;;//SMTP服务器的用户密码</div><div class="line">$mailtitle = $_POST[&apos;title&apos;];//邮件主题</div><div class="line">$mailcontent = &quot;&lt;h1&gt;&quot;.$_POST[&apos;content&apos;].&quot;&lt;/h1&gt;&quot;;//邮件内容</div><div class="line">$mailtype = &quot;HTML&quot;;//邮件格式（HTML/TXT）,TXT为文本邮件</div><div class="line">//************************ 配置信息 ****************************</div><div class="line">$smtp = new smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.</div><div class="line">$smtp-&gt;debug = true;//是否显示发送的调试信息</div><div class="line">$state = $smtp-&gt;sendmail($smtpemailto, $smtpusermail, $mailtitle, $mailcontent, $mailtype);</div><div class="line"></div><div class="line">echo &quot;&lt;div style=&apos;width:300px; margin:36px auto;&apos;&gt;&quot;;</div><div class="line">if($state==&quot;&quot;)&#123;</div><div class="line">    echo &quot;对不起，邮件发送失败！请检查邮箱填写是否有误。&quot;;</div><div class="line">    echo &quot;&lt;a href=&apos;index.html&apos;&gt;点此返回&lt;/a&gt;&quot;;</div><div class="line">    exit();</div><div class="line">&#125;</div><div class="line">echo &quot;恭喜！邮件发送成功！！&quot;;</div><div class="line">echo &quot;&lt;a href=&apos;index.html&apos;&gt;点此返回&lt;/a&gt;&quot;;</div><div class="line">echo &quot;&lt;/div&gt;&quot;;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="图片上传以及压缩"><a href="#图片上传以及压缩" class="headerlink" title="图片上传以及压缩"></a>图片上传以及压缩</h4><p>就是接受form表单的FILE，然后存到本地。<br>首先是图片上传的接口代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">define(&quot;IMGPATH&quot;,&quot;/upload/image/&quot;); //设置默认上传路径</div><div class="line">$serverRoot = $_SERVER[&apos;DOCUMENT_ROOT&apos;];</div><div class="line">//修改权限</div><div class="line"></div><div class="line">$img = $_FILES[&apos;inputImg&apos;];</div><div class="line">$return = new stdClass();</div><div class="line">//接受文件并且判断</div><div class="line">if($img)&#123;</div><div class="line">    $return-&gt;status = &quot;success&quot;;</div><div class="line">    $tmp_path = $img[&apos;tmp_name&apos;];</div><div class="line">    $img_name = $img[&apos;name&apos;];</div><div class="line">    //    $img_type = $img[&apos;type&apos;];</div><div class="line">    $regex = &apos;/.(jpg|png|jpeg|gif)/&apos;;</div><div class="line">//正则匹配，判断是否问图片    preg_match($regex,strtolower($img_name),$type);</div><div class="line">    date_default_timezone_set(&quot;PRC&quot;);</div><div class="line">    $nowDay = date(&quot;Ymd&quot;);</div><div class="line">    $timeUnix = time();</div><div class="line">    $dirPath = $serverRoot.IMGPATH.$nowDay.&quot;/&quot;;</div><div class="line">    $hashName = $timeUnix.abs(crc32($img_name)).$type[0];   //生成纯数字的hash随机名称，放在重复</div><div class="line">    $file_relative_path = IMGPATH.$nowDay.&quot;/&quot;.$hashName;</div><div class="line">    if(!is_dir($dirPath)) mkdir($dirPath);</div><div class="line">    copy($tmp_path,$dirPath.$hashName);</div><div class="line">    $img = &quot;http://120.27.247.68&quot;.$file_relative_path;</div><div class="line">    $return-&gt;url = $img;</div><div class="line">&#125;else&#123;</div><div class="line">    $return-&gt;status = &quot;fail&quot;;</div><div class="line">    $return-&gt;error = &quot;error&quot;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$localImg=&quot;/home/wwwroot/default&quot;.$file_relative_path;</div><div class="line">//如果大于500kb则压缩</div><div class="line">if(filesize($localImg)&gt;50000) &#123;</div><div class="line">    $data = array(&quot;imgUrl&quot; =&gt; $img);</div><div class="line">    $data = http_build_query($data);</div><div class="line">    $opts = array(</div><div class="line">        &apos;http&apos;=&gt;array(</div><div class="line">            &apos;method&apos;  =&gt; &apos;POST&apos;,</div><div class="line">            &apos;header&apos;  =&gt; &apos;Content-type: application/x-www-form-urlencoded&apos;,</div><div class="line">            &apos;content&apos; =&gt; $data</div><div class="line">        )</div><div class="line">    );</div><div class="line">    $cxContext = stream_context_create($opts);</div><div class="line"></div><div class="line">    $sFile = file_get_contents(&quot;http://120.27.247.68/api/image/imgZip.php&quot;, false, $cxContext);</div><div class="line">&#125;</div><div class="line"></div><div class="line">echo(json_encode($return));</div></pre></td></tr></table></figure></p>
+<p>后面这个是图片压缩的代码，其实就是降低图片像素，再替换原图片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">/**</div><div class="line"> * Created by PhpStorm.</div><div class="line"> * User: silence</div><div class="line"> * Date: 2016/10/25</div><div class="line"> * Time: 下午3:12</div><div class="line"> */</div><div class="line">/**</div><div class="line"> * desription 压缩图片</div><div class="line"> * @param string $imgsrc 图片路径</div><div class="line"> * @param string $imgdst 压缩后保存路径</div><div class="line"> */</div><div class="line">function image_png_size_add($imgsrc)&#123;</div><div class="line">    $imgdst = $imgsrc;</div><div class="line">    list($width,$height,$type)=getimagesize($imgsrc);</div><div class="line">//    $new_width = ($width&gt;1600?1600:$width)*0.9;</div><div class="line">//    $new_height =($height&gt;1200?1200:$height)*0.9;</div><div class="line">    $new_width = $width*0.5;</div><div class="line">    $new_height = $height*0.5;</div><div class="line">    switch($type)&#123;</div><div class="line">        case 1:</div><div class="line">            $giftype=check_gifcartoon($imgsrc);</div><div class="line">            if($giftype)&#123;</div><div class="line">                header(&apos;Content-Type:image/gif&apos;);</div><div class="line">                $image_wp=imagecreatetruecolor($new_width, $new_height);</div><div class="line">                $image = imagecreatefromgif($imgsrc);</div><div class="line">                imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);</div><div class="line">                imagejpeg($image_wp, $imgdst,75);</div><div class="line">                imagedestroy($image_wp);</div><div class="line">            &#125;</div><div class="line">            break;</div><div class="line">        case 2:</div><div class="line">            header(&apos;Content-Type:image/jpeg&apos;);</div><div class="line">            $image_wp=imagecreatetruecolor($new_width, $new_height);</div><div class="line">            $image = imagecreatefromjpeg($imgsrc);</div><div class="line">            imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);</div><div class="line">            imagejpeg($image_wp, $imgdst,75);</div><div class="line">            imagedestroy($image_wp);</div><div class="line">            break;</div><div class="line">        case 3:</div><div class="line">            header(&apos;Content-Type:image/png&apos;);</div><div class="line">            $image_wp=imagecreatetruecolor($new_width, $new_height);</div><div class="line">            $image = imagecreatefrompng($imgsrc);</div><div class="line">            imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);</div><div class="line">            imagejpeg($image_wp, $imgdst,75);</div><div class="line">            imagedestroy($image_wp);</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">/**</div><div class="line"> * desription 判断是否gif动画</div><div class="line"> * @param string $image_file图片路径</div><div class="line"> * @return boolean t 是 f 否</div><div class="line"> */</div><div class="line">function check_gifcartoon($image_file)&#123;</div><div class="line">    $fp = fopen($image_file,&apos;rb&apos;);</div><div class="line">    $image_head = fread($fp,1024);</div><div class="line">    fclose($fp);</div><div class="line">    return preg_match(&quot;/&quot;.chr(0x21).chr(0xff).chr(0x0b).&apos;NETSCAPE2.0&apos;.&quot;/&quot;,$image_head)?false:true;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@$imgFile = $_POST[&apos;imgUrl&apos;];</div><div class="line">echo $imgFile.&quot;&lt;br&gt;&quot;;</div><div class="line">$imgFile=str_replace(&quot;http://120.27.247.68&quot;,&quot;/home/wwwroot/default&quot;,$imgFile);</div><div class="line">echo $imgFile.&quot;&lt;br&gt;&quot;;</div><div class="line">//@$imgFile = &quot;/home/wwwroot/default/WeChatProject/upload/image/20161019/14768660031366040191.jpg&quot;;</div><div class="line">if(!file_exists($imgFile))&#123;</div><div class="line">    echo &quot;要压缩的文件不存在。&quot;;</div><div class="line">&#125;else&#123;</div><div class="line">    image_png_size_add($imgFile);</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>上传文件也是同样的道理。</p>
+<h4 id="PHP爬虫后的匹配"><a href="#PHP爬虫后的匹配" class="headerlink" title="PHP爬虫后的匹配"></a>PHP爬虫后的匹配</h4><p>PHP的爬虫就是一个简单的CURL，爬完数据后的整理数据才比较重要！主要用的一个开源库<a href="http://www.phpddt.com/manual/simplehtmldom_1_5/manual.htm" target="_blank" rel="external">simple_html_dom</a>，它能快捷匹配到html的dom节点，很方便。访问他的官方说明文档，会有很多例子啦！</p>
+<h4 id="mi-push推送功能"><a href="#mi-push推送功能" class="headerlink" title="mi_push推送功能"></a>mi_push推送功能</h4><p>哇！做这一块的时候，我的心态是爆炸的，因为小米官方并没有给出说明稳定，只给出了SDK，于是我就照着JAVA的说明文档写代码。这里给出我自己猜测的理解！<br><a href="http://dev.xiaomi.com/mipush/downpage/php.html" target="_blank" rel="external">先上官方SDK的链接。</a></p>
+<p>然后里面的关键词和JAVA文档中的差不多，以安卓为例，IOS的差不多：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">header(&apos;Access-Control-Allow-Origin: *&apos;);</div><div class="line">use xmpush\Builder;</div><div class="line">use xmpush\HttpBase;</div><div class="line">use xmpush\Sender;</div><div class="line">use xmpush\Constants;</div><div class="line">use xmpush\Stats;</div><div class="line">use xmpush\Tracer;</div><div class="line">use xmpush\Feedback;</div><div class="line">use xmpush\DevTools;</div><div class="line">use xmpush\Subscription;</div><div class="line">use xmpush\TargetedMessage;</div><div class="line">include_once(dirname(__FILE__).&apos;/autoload.php&apos;);</div><div class="line">$secret = &apos;开发者信息&apos;;</div><div class="line">$package = &apos;开发者信息&apos;;</div><div class="line">// 常量设置必须在new Sender()方法之前调用</div><div class="line">Constants::setPackage($package);</div><div class="line">Constants::setSecret($secret);</div><div class="line">$fileId = $_POST[&apos;fileId&apos;];</div><div class="line">$title = $_POST[&apos;title&apos;];</div><div class="line">$url = $_POST[&apos;url&apos;];</div><div class="line">$desc = $title;</div><div class="line">$title = &apos;教案推送!&apos;;</div><div class="line"></div><div class="line">$payload = &apos;&#123;&quot;fileId&quot;:&quot;&apos;.$fileId.&apos;&quot;,&quot;msg&quot;:&quot;教案推送&quot;,&quot;url&quot;:&quot;&apos;.$url.&apos;&quot;&#125;&apos;;</div><div class="line"></div><div class="line">$sender = new Sender();</div><div class="line"></div><div class="line">// message 演示预定义点击行为中的点击直接打开app行为</div><div class="line">$message = new Builder();</div><div class="line">$message-&gt;title($title);//推送标题</div><div class="line">$message-&gt;description($desc);//推送的内容</div><div class="line">$message-&gt;passThrough(0);</div><div class="line">$message-&gt;payload($payload); // 对于预定义点击行为，payload会通过点击进入的界面的intent中的extra字段获取，而不会调用到onReceiveMessage方法。</div><div class="line">$message-&gt;extra(Builder::notifyEffect, 2); // 此处设置预定义点击行为，1为打开app</div><div class="line">$message-&gt;extra(Builder::intentUri, &quot;intent:#Intent;component=cn.aike.cloudnews/.activity.message.MessageActivity;end&quot;); // 这个是客户端配置的包名</div><div class="line">$message-&gt;extra(Builder::notifyForeground, 1);</div><div class="line"></div><div class="line">$message-&gt;notifyId(0);</div><div class="line">$message-&gt;build();</div><div class="line">print_r($sender-&gt;broadcastAll($message)-&gt;getRaw());//显示推送后的返回信息</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="视频内容"><a href="#视频内容" class="headerlink" title="视频内容"></a>视频内容</h4><p>视频内容采用的是第三方<a href="http://lm.tv.sohu.com/" target="_blank" rel="external">搜狐视频</a>，主要是把视频都放在自己的服务器上，加载太慢了，然后就用了第三方。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PHP/" rel="tag"># PHP</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/10/PHP开发无课表系统/" rel="next" title="PHP开发无课表系统">
+                <i class="fa fa-chevron-left"></i> PHP开发无课表系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/13/一些PHP的小技术/"
+     data-title="一些PHP的小技术"
+     data-content=""
+     data-url="https://silencezjl.github.io/2017/03/13/一些PHP的小技术/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/13/一些PHP的小技术/"
+           data-title="一些PHP的小技术" data-url="https://silencezjl.github.io/2017/03/13/一些PHP的小技术/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://imgsrc.baidu.com/forum/w%3D580/sign=5f355304820a19d8cb03840d03fb82c9/d4818c1001e93901b2b5878b79ec54e737d196ac.jpg"
+               alt="Silence Zhang" />
+          <p class="site-author-name" itemprop="name">Silence Zhang</p>
+           
+              <p class="site-description motion-element" itemprop="description">善悟其心，勿困于形。</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Silencezjl" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="javascript:alert(970770194);" target="_blank" title="QQ">
+                  
+                    <i class="fa fa-fw fa-qq"></i>
+                  
+                  QQ
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP后台发smtp邮件"><span class="nav-number">2.</span> <span class="nav-text">PHP后台发smtp邮件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图片上传以及压缩"><span class="nav-number">3.</span> <span class="nav-text">图片上传以及压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP爬虫后的匹配"><span class="nav-number">4.</span> <span class="nav-text">PHP爬虫后的匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mi-push推送功能"><span class="nav-number">5.</span> <span class="nav-text">mi_push推送功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#视频内容"><span class="nav-number">6.</span> <span class="nav-text">视频内容</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Silence Zhang</span>
+</div>
+
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"silencezjl"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("pPsgL96Cogj95NaiVUbIUhTd-gzGzoHsz", "T9sDCmmfofiTD13ACCxf8cqS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+  
+
+
+  
+
+</body>
+</html>
