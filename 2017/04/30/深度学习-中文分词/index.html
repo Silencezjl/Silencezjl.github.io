@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://silencezjl.github.io/images/RNN.jpg">
 <meta property="og:image" content="https://silencezjl.github.io/images/lstm.png">
 <meta property="og:image" content="https://silencezjl.github.io/images/Bi-lstm.jpg">
-<meta property="og:updated_time" content="2017-04-30T06:24:32.653Z">
+<meta property="og:updated_time" content="2017-04-30T07:24:13.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-中文分词">
 <meta name="twitter:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的baze">
@@ -399,7 +399,7 @@
                     <span class="post-meta-item-text">字数统计</span>
                   
                     <span title="字数统计" }}">
-                      922
+                      1,593
                     </span>
               
 
@@ -439,7 +439,40 @@
 
 
 <h4 id="2-4-CRF-Conditional-Random-Field"><a href="#2-4-CRF-Conditional-Random-Field" class="headerlink" title="2.4. CRF (Conditional Random Field)"></a>2.4. CRF (Conditional Random Field)</h4><p>条件随机场这个东西，是个数学问题，应该是概率论的知识，可以把它结合HMM(Hidden Markov Model)一起理解，个人理解是：CRF讲的是一个序列中，各个元素之间的出现概率，HMM讲的是，这个序列出现的概率。具体权威解释，请看<a href="https://www.zhihu.com/question/35866596" target="_blank" rel="external">这里</a></p>
-<h3 id="2-代码解读-1"><a href="#2-代码解读-1" class="headerlink" title="2. 代码解读"></a>2. 代码解读</h3>
+<h3 id="3-代码解读"><a href="#3-代码解读" class="headerlink" title="3. 代码解读"></a>3. 代码解读</h3><p>假设你已经明白上面的理论知识，你就可以开始看代码了。我会跟着它Github上的操作步骤来解释代码。<br>切换到代码目录，运行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  &gt; python kcws/train/process_anno_file.py &lt;绝对路径到语料目录&gt; pre_chars_for_w2v.txt</div><div class="line">#这一步是去除语料库的标注信息，并且将每个字都分开。  </div><div class="line">  &gt; bazel build third_party/word2vec:word2vec</div><div class="line">#这一步是构建word2vec的环境</div></pre></td></tr></table></figure></p>
+<p>   先得到初步词表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  &gt; ./bazel-bin/third_party/word2vec/word2vec -train pre_chars_for_w2v.txt -save-vocab pre_vocab.txt -min-count 3</div><div class="line">#得到一个词频字典</div></pre></td></tr></table></figure></p>
+<p>  处理低频词<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  &gt; python kcws/train/replace_unk.py pre_vocab.txt pre_chars_for_w2v.txt chars_for_w2v.txt</div><div class="line">#我对比过chars_for_w2v.txt和pre_chars_for_w2v.txt，他们两个是一样的啊，感觉这一步没有用。</div></pre></td></tr></table></figure></p>
+<p>  训练word2vec</p>
+<pre><code>  &gt; ./bazel-bin/third_party/word2vec/word2vec -train chars_for_w2v.txt -output vec.txt -size 50 -sample 1e-4 -negative 5 -hs 1 -binary 0 -iter 5
+#这儿就开始变魔术了，这一步可以得到每个字的字向量。
+</code></pre><p>  构建训练语料工具</p>
+<pre><code> &gt; bazel build kcws/train:generate_training
+#构建generate_training的环境，generate_training.py是用来得到没句话的向量和标注的。
+#这个标注有个解释：
+ # label -1, unknown
+ # 0-&gt; &apos;S&apos; 代表Single，单字
+ # 1-&gt; &apos;B&apos; 代表Begin，词的开始
+ # 2-&gt; &apos;M&apos; 代表Middle，词的中间
+ # 3-&gt; &apos;E&apos; 代表End，词的结束
+</code></pre><p>  生成语料</p>
+<pre><code>
+  &gt; ./bazel-bin/kcws/train/generate_training vec.txt &lt;绝对路径到语料目录&gt; all.txt
+#通过vec.txt讲语料库的文本转化为向量，同时将其标注。
+</code></pre><p>得到train.txt , test.txt文件</p>
+<pre><code> &gt; python kcws/train/filter_sentence.py all.txt
+#选8000个为测试集，其余为训练集。
+</code></pre><p>安装好tensorflow,切换到kcws代码目录，运行:</p>
+<pre><code>&gt; python kcws/train/train_cws_lstm.py --word2vec_path vec.txt --train_data_path &lt;绝对路径到train.txt&gt; --test_data_path test.txt --max_sentence_len 80 --learning_rate 0.001
+</code></pre><p>生成vocab</p>
+<pre><code>  &gt; bazel  build kcws/cc:dump_vocab
+  &gt; 
+  &gt; ./bazel-bin/kcws/cc/dump_vocab vec.txt kcws/models/basic_vocab.txt
+#目前不知道这个有啥用，应该是调用模型时用的，C++的代码我还没有看。。
+</code></pre><p>导出训练好的模型</p>
+<pre><code> &gt;  python tools/freeze_graph.py --input_graph logs/graph.pbtxt  --input_checkpoint logs/model.ckpt --output_node_names  &quot;transitions,Reshape_7&quot;   --output_graph kcws/models/seg_model.pbtxt
+#导出计算TensorFlow的计算图谱，以便以后调用。
+</code></pre><h3 id="4-最后一句"><a href="#4-最后一句" class="headerlink" title="4. 最后一句"></a>4. 最后一句</h3><p>最后调用模型的C++代码我还没有看，以后看了再Update这篇文章，官方说这个代码思路是参考论文：<a href="http://www.aclweb.org/anthology/N16-1030" target="_blank" rel="external">http://www.aclweb.org/anthology/N16-1030</a>。我看了一下这篇论文，是一个关于命名实体识别的运用，此代码是中文分词的，可见此代码也改进不少，说不定整理一下，可以发一篇论文，但是这样有点够，哈哈哈，关于字词向量那个地方我还有点迷糊，不知道是如何通过字向量得到词向量的？直接相加吗？有点不靠谱。。</p>
+
       
     </div>
 
@@ -644,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代码解读"><span class="nav-number">2.</span> <span class="nav-text">2. 代码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Word2Vec"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. Word2Vec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-RNN-Recurrent-Neural-Networks"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. RNN (Recurrent Neural Networks)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-LSTM-Long-Short-Term-Memory"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. LSTM (Long Short-Term Memory)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-CRF-Conditional-Random-Field"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. CRF (Conditional Random Field)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代码解读-1"><span class="nav-number">3.</span> <span class="nav-text">2. 代码解读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-代码解读"><span class="nav-number">2.</span> <span class="nav-text">2. 代码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Word2Vec"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. Word2Vec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-RNN-Recurrent-Neural-Networks"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. RNN (Recurrent Neural Networks)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-LSTM-Long-Short-Term-Memory"><span class="nav-number">2.3.</span> <span class="nav-text">2.3. LSTM (Long Short-Term Memory)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-CRF-Conditional-Random-Field"><span class="nav-number">2.4.</span> <span class="nav-text">2.4. CRF (Conditional Random Field)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-代码解读"><span class="nav-number">3.</span> <span class="nav-text">3. 代码解读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-最后一句"><span class="nav-number">4.</span> <span class="nav-text">4. 最后一句</span></a></li></ol></div>
             
 
           </div>
