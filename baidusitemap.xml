@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://silencezjl.coding.me/2017/03/08/Windows%E9%83%A8%E7%BD%B2TensorFlow/</loc>
+    <lastmod>2017-05-03T05:14:00.103Z</lastmod>
+    <data>
+        <display>
+        <title>Windows部署TensorFlow</title>
+        <pubTime>2017-03-08T11:25:10.000Z</pubTime>
+        
+        <tag>Tensorflow</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://silencezjl.coding.me/2017/05/01/%E5%81%B7%E4%B8%80%E6%B3%A2%E8%B5%84%E6%BA%90/</loc>
     <lastmod>2017-05-01T06:32:45.254Z</lastmod>
     <data>
@@ -97,23 +114,6 @@
         <pubTime>2017-03-10T03:58:37.000Z</pubTime>
         
         <tag>PHP</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://silencezjl.coding.me/2017/03/08/Windows%E9%83%A8%E7%BD%B2TensorFlow/</loc>
-    <lastmod>2017-03-08T12:09:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>Windows部署TensorFlow</title>
-        <pubTime>2017-03-08T11:25:10.000Z</pubTime>
-        
-        <tag>Tensorflow</tag>
          
          
            
