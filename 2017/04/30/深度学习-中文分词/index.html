@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://silencezjl.github.io/images/RNN.jpg">
 <meta property="og:image" content="https://silencezjl.github.io/images/lstm.png">
 <meta property="og:image" content="https://silencezjl.github.io/images/Bi-lstm.jpg">
-<meta property="og:updated_time" content="2017-05-03T10:42:58.451Z">
+<meta property="og:updated_time" content="2017-05-03T10:45:02.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-中文分词">
 <meta name="twitter:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的baze">
@@ -471,7 +471,7 @@
 </code></pre><p>导出训练好的模型</p>
 <pre><code> &gt;  python tools/freeze_graph.py --input_graph logs/graph.pbtxt  --input_checkpoint logs/model.ckpt --output_node_names  &quot;transitions,Reshape_7&quot;   --output_graph kcws/models/seg_model.pbtxt
 #导出计算TensorFlow的计算图谱，以便以后调用。
-</code></pre><h3 id="4-最后一句"><a href="#4-最后一句" class="headerlink" title="4. 最后一句"></a>4. 最后一句</h3><p>最后调用模型的C++代码我还没有看，以后看了再Update这篇文章，官方说这个代码思路是参考论文：<a href="http://www.aclweb.org/anthology/N16-1030" target="_blank" rel="external">http://www.aclweb.org/anthology/N16-1030</a>。我看了一下这篇论文，是一个关于命名实体识别的运用，此代码是中文分词的，可见此代码也改进不少，说不定整理一下，可以发一篇论文，但是这样有点够，哈哈哈，关于字词向量那个地方我还有点迷糊，不知道是如何通过字向量得到词向量的？直接相加吗？有点不靠谱。。</p>
+</code></pre><h3 id="4-最后一句"><a href="#4-最后一句" class="headerlink" title="4. 最后一句"></a>4. 最后一句</h3><p>最后调用模型的C++代码我还没有看，以后看了再Update这篇文章，官方说这个代码思路是参考论文：<a href="http://www.aclweb.org/anthology/N16-1030" target="_blank" rel="external">http://www.aclweb.org/anthology/N16-1030</a>。我看了一下这篇论文，是一个关于命名实体识别的运用，此代码是中文分词的，可见此代码也改进不少，说不定整理一下，可以发一篇论文，但是这样有点狗，哈哈哈，关于字词向量那个地方我还有点迷糊，不知道是如何通过字向量得到词向量的？直接相加吗？有点不靠谱。。</p>
 
       
     </div>
