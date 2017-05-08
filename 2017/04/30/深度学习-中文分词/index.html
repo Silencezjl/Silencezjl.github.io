@@ -105,19 +105,19 @@
 
 
 
-<meta name="description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的baze">
+<meta name="description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长短时记忆单元(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的bazel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习-中文分词">
 <meta property="og:url" content="https://silencezjl.github.io/2017/04/30/深度学习-中文分词/index.html">
 <meta property="og:site_name" content="Silence’s Blog">
-<meta property="og:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的baze">
+<meta property="og:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长短时记忆单元(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的bazel">
 <meta property="og:image" content="https://silencezjl.github.io/images/RNN.jpg">
 <meta property="og:image" content="https://silencezjl.github.io/images/lstm.png">
 <meta property="og:image" content="https://silencezjl.github.io/images/Bi-lstm.jpg">
-<meta property="og:updated_time" content="2017-05-03T10:45:02.429Z">
+<meta property="og:updated_time" content="2017-05-08T13:16:38.590Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习-中文分词">
-<meta name="twitter:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的baze">
+<meta name="twitter:description" content="1. 前言很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长短时记忆单元(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的源代码。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的bazel">
 <meta name="twitter:image" content="https://silencezjl.github.io/images/RNN.jpg">
 
 
@@ -399,7 +399,7 @@
                     <span class="post-meta-item-text">字数统计</span>
                   
                     <span title="字数统计" }}">
-                      1,591
+                      1,589
                     </span>
               
 
@@ -422,7 +422,7 @@
       
 
       
-        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长期记忆神经网络(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的<a href="https://github.com/koth/kcws" target="_blank" rel="external">源代码</a>。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的bazel代码构架工具可以进行Build，运用Python进行模型的训练，再运用C++进行模型调用(估计是C++调用的速度会快一些)，神经网络的框架是基于TensorFlow_1.0，还运用了Word2Vec相关工具进行语料预处理，语料库来自2014年的人民日报，是已经分词完成的句子。(真的，看这个代码，就像看别人变魔术一样。)</p>
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>很久没有写博客了，这段时间一直在忙着各种数学建模比赛，加上这个中文分词的代码比较难(注释太少了！)，基于双向长短时记忆单元(Bi-LSTM)和条件随机场(CRF)，我看了很久才看懂一些皮毛，所以今天才来Commit一下。首先附上这个开源项目的<a href="https://github.com/koth/kcws" target="_blank" rel="external">源代码</a>。在网上各种百度，都没有看到详细的解释，于是只有自己慢慢读代码了TAT，代码是用C++和Python混合开发的，运用了Google的bazel代码构架工具可以进行Build，运用Python进行模型的训练，再运用C++进行模型调用(估计是C++调用的速度会快一些)，神经网络的框架是基于TensorFlow_1.0，还运用了Word2Vec相关工具进行语料预处理，语料库来自2014年的人民日报，是已经分词完成的句子。(真的，看这个代码，就像看别人变魔术一样。)</p>
 <h3 id="2-代码解读"><a href="#2-代码解读" class="headerlink" title="2. 代码解读"></a>2. 代码解读</h3><p>要看懂这个代码，首先你需要掌握一些机器学习的算法。下面我简单介绍一下。如果你都知道就可以跳过这一节。</p>
 <h4 id="2-1-Word2Vec"><a href="#2-1-Word2Vec" class="headerlink" title="2.1. Word2Vec"></a>2.1. Word2Vec</h4><p>Word2Vec(下文简称W2V)是一种将词语量化的工具(量化后电脑才能看懂)，指 mikolov 在 2011 年发表的 paper 中用到的模型和工具。实际也是运用了神经网络，具体来说，是 CBOW 和 SKIP-GRAM 两个模型，negative sampling 和 hierarchical softmax 两种训练方法组成的 word embedding 训练方法。此代码运用了CBOW的思路，就是通过上下文的词语预测来进行神经网络的训练，在此我不细讲，具体思路可以看看<a href="http://www.bilibili.com/video/av9258966/" target="_blank" rel="external">这里</a>。</p>
 <h4 id="2-2-RNN-Recurrent-Neural-Networks"><a href="#2-2-RNN-Recurrent-Neural-Networks" class="headerlink" title="2.2. RNN (Recurrent Neural Networks)"></a>2.2. RNN (Recurrent Neural Networks)</h4><p>循环神经网络，已经在众多自然语言处理中取得了巨大成功以及广泛应用。如下图1，左侧是的x是输入，U、V、W为权值，s为一个节点，o是输出。将这个结构进行展开，就能更直观的理解RNN了。每层神经网络的信息都会传递给下一个节点。这种串联的结构天然就非常适合时间序列型数据的处理和分析。<br><img src="/images/RNN.jpg" alt="RNN"></p>
@@ -433,7 +433,7 @@
 <center>图2 LSTM网络结构图</center>
 
 <p>其中包含4层神经网络，其中小圆点是point-wise操作，比如向量加法，点乘等。小矩形代表一层可学习参数的神经网络。具体思路看<a href="http://www.jianshu.com/p/9dc9f41f0b29" target="_blank" rel="external">这里</a>。</p>
-<p>具体代码中是使用的Bi-LSTM，双向长期记忆神经网络，应该是受到了W2V的启发，Bi-LSTM是结合上下文来进行神经网络的训练的。传统的LSTM只能根据上文来猜测下文，而Bi-LSTM优化了这一点，它的结构如下图3。</p>
+<p>具体代码中是使用的Bi-LSTM，双向长短时记忆单元，应该是受到了W2V的启发，Bi-LSTM是结合上下文来进行神经网络的训练的。传统的LSTM只能根据上文来猜测下文，而Bi-LSTM优化了这一点，它的结构如下图3。</p>
 <p><img src="/images/Bi-lstm.jpg" alt="bi-lstm"></p>
 <center>图3 Bi-LSTM网络结构图(<a href="http://www.aclweb.org/anthology/N16-1030" target="_blank" rel="external">来源</a>)</center>
 
